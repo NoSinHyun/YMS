@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver" />
+		<property name="jdbcUrl"
+			value="jdbc:oracle:thin:@localhost:1521:XE" />
+		<property name="username" value="ICIA"></property>
+		<property name="password" value="1111"></property>
+	</bean>
+
+	<bean id="datasource" class="com.zaxxer.hikari.HikariDataSource"
+		destroy-method="close">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+	</bean>
+
+	<mybatis-spring:scan base-package="com.yms.mapper" /> <!-- DAO 데이터베이스 -->
+	<context:component-scan	base-package="com.yms.model"></context:component-scan> <!-- VO 데이터타입 -->
+	<context:component-scan	base-package="com.yms.service"></context:component-scan> <!-- 연결 -->
+
+
+</beans>
